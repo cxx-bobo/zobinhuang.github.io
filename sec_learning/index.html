@@ -20,23 +20,23 @@
     var CONFIG = {"hostname":"zobinhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":180,"display":"post","padding":10,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="document.onkeydown&#x3D;function()              &#x2F;&#x2F;网页内按下回车触发         {                 if(event.keyCode&#x3D;&#x3D;13)                 {                         document.getElementById(&quot;global">
+  <meta name="description" content="document.onkeydown&#x3D;function()              &#x2F;&#x2F;网页内按下回车触发         {                 if(event.keyCode&#x3D;&#x3D;13)                 {                         document.getElementById(&quot;g">
 <meta property="og:type" content="website">
-<meta property="og:title" content="知识库">
+<meta property="og:title" content="Library (知识库)">
 <meta property="og:url" content="https://zobinhuang.github.io/sec_learning/index.html">
 <meta property="og:site_name" content="Zobin">
-<meta property="og:description" content="document.onkeydown&#x3D;function()              &#x2F;&#x2F;网页内按下回车触发         {                 if(event.keyCode&#x3D;&#x3D;13)                 {                         document.getElementById(&quot;global">
+<meta property="og:description" content="document.onkeydown&#x3D;function()              &#x2F;&#x2F;网页内按下回车触发         {                 if(event.keyCode&#x3D;&#x3D;13)                 {                         document.getElementById(&quot;g">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Algorithm/pic/algorithm.png">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_Backend_Development/pic/microservices_logo.png">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_System_And_Network/pic/datacenter_logo.png">
-<meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_Program/pic/coding_logo.svg">
+<meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_Program/pic/coding_logo.png">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_OS_And_Linux_Kernel/pic/linux_logo.png">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/Tech_Computer_Architerture/pic/fpga_logo.png">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/pic/wechat.jpg">
 <meta property="og:image" content="https://zobinhuang.github.io/sec_learning/pic/alipay.jpg">
-<meta property="article:published_time" content="2022-09-27T14:00:59.453Z">
-<meta property="article:modified_time" content="2022-09-27T14:00:59.453Z">
+<meta property="article:published_time" content="2023-06-15T14:36:11.510Z">
+<meta property="article:modified_time" content="2023-06-15T14:36:11.510Z">
 <meta property="article:author" content="Zhuobin Huang">
 <meta property="article:tag" content="Zobin">
 <meta property="article:tag" content="黄卓彬">
@@ -59,7 +59,7 @@
   };
 </script>
 
-  <title>知识库 | Zobin
+  <title>Library (知识库) | Zobin
 </title>
   
 
@@ -178,7 +178,7 @@
     <div class="post-block" lang="en">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">知识库
+<h1 class="post-title" itemprop="name headline">Library (知识库)
 </h1>
 
 <div class="post-meta">
@@ -195,6 +195,7 @@
           <head>
     <link rel="stylesheet" type="text/css" href="style/index.css">
     <script type="text/javascript" src="./script/search.js"></script>
+    <script type="text/javascript" src="./script/index.js"></script>
     <script>
         document.onkeydown=function()              //网页内按下回车触发
         {
@@ -207,14 +208,28 @@
     </script>
 </head>
 
-<body>
+<body onload="load_page()">
 
+<div class="broadcast_container">
+    <!-- <p>📢</p> -->
+    <div class="marquee_container">
+    <marquee scrollamount="8px">
+        <!--广播: OneFlow Fused Glu-->
+        <code>Note</code>&nbsp;&nbsp;
+        I will gradually switch to write in English by default, currently most of posts are written in Chinese
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <code>说明</code>&nbsp;&nbsp;
+        我将逐渐切换为默认使用英文来攥写知识库文章，目前大部分文章是用中文编辑的
+    </marquee>
+    </div>
+</div>
 <div align="center">
     <div class="search_engine">
         <p><b>欢迎来到 Zobin 的知识库，您将可以搜索你感兴趣的知识</b></p>
+        <p>Welcome to Zobin's library, you could try to search anything you like :-)</p>
         <div class="search_engine_form">
             <form>
-                <input id="search_input" type="text" placeholder="搜索您感兴趣的内容"/>
+                <input id="search_input" type="text" placeholder="Fill Your Interest" autofocus />
             </form>
             <button id="global_search_btn" type="button" onclick="search();">Search</button>
         </div>
@@ -252,7 +267,12 @@
 <div class="div_learning">
     <table border="1" align="center" bgcolor="#FFFFFF">
     <tr>
-        <th><div align="center"><h1><b>计算机全栈架构</b></h1></div></th>
+        <th>
+            <div align="center">
+                <h1 style="margin-bottom:0px; padding-bottom:0px;"><b>全栈计算机科学</b></h1>
+                <h5 style="margin-top:0px; padding-top:0px;"><b>Full-stack of Computer Science</b></h5>
+            </div>
+        </th>
     </tr>
     <tr>
         <td>
@@ -260,9 +280,11 @@
                 <div class="div_table_entry_cover">
                     <img src="./Algorithm/pic/algorithm.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
+                <div class="div_table_entry_content" id="Entry_Algorithm">
                     <h2><font color="red">算法理论与应用</font></h2>
+                    <h5><font color="red">Algorithm Theory and Application</font></h5>
                     <p>对各类算法的理论和在计算机实践中的应用进行了阐述
+                    <p class="intro">Explains the theory of various algorithms and their application in practice</p>
                 </div>
             </div></a>
         </td>
@@ -273,9 +295,11 @@
                 <div class="div_table_entry_cover">
                     <img src="./Tech_Backend_Development/pic/microservices_logo.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
+                <div class="div_table_entry_content" id="Entry_Tech_Backend_Development">
                     <h2><font color="red">高性能后台运维与开发</font></h2>
-                    <p>讨论基于微服务的后台开发艺术
+                    <h5><font color="red">High-performance Backend Operation and Development</font></h5>
+                    <p>讨论基于微服务的后台开发艺术</p>
+                    <p class="intro">Discuss the art of backend development based on microservices</p>
                 </div>
             </div></a>
         </td>
@@ -286,9 +310,11 @@
                 <div class="div_table_entry_cover">
                     <img src="./Tech_System_And_Network/pic/datacenter_logo.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
-                    <h2><font color="red">System And Network</font></h2>
-                    <p>讨论大规模分布式系统与网络的相关知识和论文阅读
+                <div class="div_table_entry_content" id="Entry_Tech_System_And_Network">
+                    <h2><font color="red">系统与网络</font></h2>
+                    <h5><font color="red">System And Network</font></h5>
+                    <p>讨论大规模分布式系统与网络的相关知识和论文阅读</p>
+                    <p class="intro">Discuss relevant knowledge and paper readings on large-scale distributed systems and networks</p>
                 </div>
             </div></a>
         </td>
@@ -297,11 +323,13 @@
         <td>
             <a href="/sec_learning/Tech_Program/index.html"><div class="div_table_entry_container">
                 <div class="div_table_entry_cover">
-                    <img src="./Tech_Program/pic/coding_logo.svg" height="100px"/>
+                    <img src="./Tech_Program/pic/coding_logo.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
-                    <h2><font color="red">高级编程语言</font></h2>
-                    <p>各种高级编程语言的开发技巧，这些经验是在实际项目中总结出来的
+                <div class="div_table_entry_content" id="Entry_Tech_Program">
+                    <h2><font color="red">高级编程语言与软件</font></h2>
+                    <h5><font color="red">High Level Programming Language and Software</font></h5>
+                    <p>各种高级编程语言的开发技巧，这些经验是在实际项目中总结出来的；以及与各类软件相关的编译、用法等内容</p>
+                    <p class="intro">Development skills of various high-level programming languages, these experiences are summed up in actual projects; This section also includes some software guidances corresponding to their compiling process and basic usage</p>
                 </div>
             </div></a>
         </td>
@@ -312,9 +340,11 @@
                 <div class="div_table_entry_cover">
                     <img src="./Tech_OS_And_Linux_Kernel/pic/linux_logo.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
+                <div class="div_table_entry_content" id="Entry_Tech_OS_And_Linux_Kernel">
                     <h2><font color="red">指令集架构 与 Linux内核</font></h2>
-                    <p>汇编语言基础，操作系统基础 (涉及进程、内存、存储、网络以及外设等操作系统概念)，结合 Linux 源码进行深入剖析
+                    <h5><font color="red">Instruction Set Architecture and Linux Kernel</font></h5>
+                    <p>汇编语言基础，操作系统基础 (涉及进程、内存、存储、网络以及外设等操作系统概念)，结合 Linux 源码进行深入剖析</p>
+                    <p class="intro">Basic of assembly language, Basic of operating system (involving concepts such as process, memory, storage, network and peripherals), combined with Linux source code for in-depth analysis</p>
                 </div>
             </div></a>
         </td>
@@ -325,9 +355,11 @@
                 <div class="div_table_entry_cover">
                     <img src="./Tech_Computer_Architerture/pic/fpga_logo.png" height="100px"/>
                 </div>
-                <div class="div_table_entry_content">
+                <div class="div_table_entry_content" id="Entry_Tech_Computer_Architerture">
                     <h2><font color="red">微体系架构 与 数字逻辑设计</font></h2>
-                    <p>涉及数字逻辑设计基础、处理器微架构 (micro-architecture) 基础等知识，结合 Verilog 对数字系统进行设计和分析
+                    <h5><font color="red">Microarchitecture and Digital Logic Design</font></h5>
+                    <p>涉及数字逻辑设计基础、处理器微架构 (micro-architecture) 基础等知识，结合 Verilog 对数字系统进行设计和分析</p>
+                    <p class="intro">Basic of digital logic design and processor micro-architecture, combined with Verilog HDL to design and verify practical digital systems</p>
                 </div>
             </div></a>
         </td>
@@ -365,7 +397,8 @@
 <div class="div_tea_container">
     <div class="div_tea_content_container">
         <h2>☕️ DONATE 饮咗未阿! </h2>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;如果您觉得这些文章对您的学习与工作有一定帮助，您可以考虑请我喝一杯红茶。您可以备注您想要了解的更多内容，我将努力将它们更新出来。</p>
+        <p>如果您觉得这些文章对您的学习与工作有一定帮助，您可以考虑请我喝一杯红茶，请务必留下您的想法。谢谢！</p>
+        <p>If these posts are useful to you, you may consider donating a cup of black tea, please leave your throughts. Thanks!</p>
     </div>
     <div class="div_tea_img_container">
         <img src="./pic/wechat.jpg">
@@ -502,7 +535,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

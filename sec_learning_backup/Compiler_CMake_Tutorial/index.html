@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Exo 2:300,300italic,400,400italic,700,700italic|Caveat:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zobinhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":180,"display":"post","padding":10,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MathJax &#x3D; {         tex: {             inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],             displayMath: [[&#39;$$&#39;,&#39;$$&#39;], [&#39;\\[&#39;,&#39;\\]&#39;]],             processEscapes: true,             process">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CMake 的使用方法">
+<meta property="og:url" content="https://zobinhuang.github.io/sec_learning_backup/Compiler_CMake_Tutorial/index.html">
+<meta property="og:site_name" content="Zobin">
+<meta property="og:description" content="MathJax &#x3D; {         tex: {             inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],             displayMath: [[&#39;$$&#39;,&#39;$$&#39;], [&#39;\\[&#39;,&#39;\\]&#39;]],             processEscapes: true,             process">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+<meta property="og:image" content="https://zobinhuang.github.io/sec_learning_backup/Compiler_CMake_Tutorial/pic/xxx.png">
+<meta property="article:published_time" content="2023-06-15T14:36:11.520Z">
+<meta property="article:modified_time" content="2023-06-15T14:36:11.520Z">
+<meta property="article:author" content="Zhuobin Huang">
+<meta property="article:tag" content="Zobin">
+<meta property="article:tag" content="黄卓彬">
+<meta property="article:tag" content="zobinHuang">
+<meta property="article:tag" content="网络工程">
+<meta property="article:tag" content="Networking Engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png">
+
+<link rel="canonical" href="https://zobinhuang.github.io/sec_learning_backup/Compiler_CMake_Tutorial/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CMake 的使用方法 | Zobin
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Zobin" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Zobin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Lovin' Tech with Tea</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about-me-(关于我)">
+
+    <a href="/sec_about/" rel="section"><i class="fa fa-user fa-fw"></i>About Me (关于我)</a>
+
+  </li>
+        <li class="menu-item menu-item-library-(知识库)">
+
+    <a href="/sec_learning" rel="section"><i class="fa fa-duotone fa-book fa-fw"></i>Library (知识库)</a>
+
+  </li>
+        <li class="menu-item menu-item-music-(独立音乐人)">
+
+    <a href="/sec_music" rel="section"><i class="fa fa-music fa-fw"></i>Music (独立音乐人)</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">CMake 的使用方法
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/sec_learning_backup/">SEC_LEARNING_BACKUP</a></li>
+          <li>COMPILER_CMAKE_TUTORIAL</li>
+        
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <head>
+<!--导入样式表-->
+<link rel="stylesheet" type="text/css" href="style/index.css">
+
+<!--导入网页脚本-->
+<script src="script/index.js"></script>
+
+<!--支持伪代码显示-->
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-chtml.js"
+        integrity="sha256-3Fdoa5wQb+JYfEmTpQHx9sc/GuwpfC/0R9EpBki+mf8=" crossorigin>
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js">
+</script>
+
+<!--支持网页公式显示-->    
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML-full"></script>
+
+<!--支持矩阵显示-->
+<script type="text/javascript">
+  run_maths = function() {
+    if (document.querySelector('[class*="cmath"]') !== null) {
+      if (typeof (mjax_path)=='undefined') { mjax_path='https://cdn.jsdelivr.net/npm/mathjax@2'; }
+      if (typeof (mjax_config)=='undefined') { mjax_config='AM_CHTML'; }
+      smjax = document.createElement ('script');
+      smjax.setAttribute('src',`${mjax_path}/MathJax.js?config=${mjax_config}`);
+      smjax.setAttribute('async',true);
+      document.getElementsByTagName('head')[0].appendChild(smjax);
+    }
+  };
+  if (document.readyState === 'loading') {  
+    window.addEventListener('DOMContentLoaded', run_maths); 
+  } else { 
+    run_maths(); 
+  }
+</script>
+</head>
+
+<body onload="load_page()">
+
+<div align="center" class="div_indicate_source">
+  <h4>⚠ 转载请注明出处：<font color="red"><i>作者：ZobinHuang，更新日期：July 25 2022</i></font></h4>
+</div>
+<div class="div_licence">
+  <br>
+  <div align="center">
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="知识共享许可协议" style="border-width:0; margin-left: 20px; margin-right: 20px;" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+  </div>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;本<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">作品</span>由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"><b>ZobinHuang</b></span> 采用 <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><font color="red">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</font></a> 进行许可，在进行使用或分享前请查看权限要求。若发现侵权行为，会采取法律手段维护作者正当合法权益，谢谢配合。
+  </p>
+</div>
+<br>
+<div class="div_catalogue">
+  <div align="center">
+    <h1> 目录 </h1>
+    <p>
+    <font size="3px">有特定需要的内容直接跳转到相关章节查看即可。</font>
+  </div>
+  <div class="div_load_catalogue_alert" id="load_catalogue_alert">正在加载目录...</div>
+  <div class="div_catalogue_container" id="catalogue_container">
+  </div>
+</div><br>
+
+<!-- Start your post here -->
+<h2 class="title">Cmake 简介</h2>
+<div class="div_learning_post">
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;TODO
+</div>
+
+<h2 class="title">使用CMake</h2>
+<div class="div_learning_post">
+  <h3 class="title">创建工程目录</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先让我们创建这样一个工程目录:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">└── out</span><br><span class="line">    └── build</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在根目录下，我们创建一个名为 <code>CMakeLists.txt</code> 的空文件 (注意命名规范)，以及一个 <code>main.cpp</code> 文件，源文件内容简单书写如下:
+
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在，让我们简单运行 <code>cmake</code> 命令:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 移步到存储构建文件的位置</span></span><br><span class="line"><span class="built_in">cd</span> ./out/build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始构建</span></span><br><span class="line">cmake -S ../../ -B .</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;构建的命令中，<code>-S</code> 用于指定源文件的具体位置，<code>-B</code> 参数用于指定 cmake 构建输出的文件的存放位置。运行完上述命令后，我们会得到如下所示的输出:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ cmake -S ../../ -B .</span><br><span class="line">CMake Warning (dev) <span class="keyword">in</span> CMakeLists.txt:</span><br><span class="line">  No project() <span class="built_in">command</span> is present.  The top-level CMakeLists.txt file must</span><br><span class="line">  contain a literal, direct call to the project() <span class="built_in">command</span>.  Add a line of</span><br><span class="line">  code such as</span><br><span class="line"></span><br><span class="line">    project(ProjectName)</span><br><span class="line"></span><br><span class="line">  near the top of the file, but after cmake_minimum_required().</span><br><span class="line"></span><br><span class="line">  CMake is pretending there is a <span class="string">&quot;project(Project)&quot;</span> <span class="built_in">command</span> on the first</span><br><span class="line">  line.</span><br><span class="line">This warning is <span class="keyword">for</span> project developers.  Use -Wno-dev to suppress it.</span><br><span class="line"></span><br><span class="line">-- The C compiler identification is GNU 9.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 9.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/zobin/projects/cmake/out/build</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;然后，我们在 <code>[Path to root]/out/build/</code> 目录下会发现，生成了一些中间文件，如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">└── out</span><br><span class="line">    └── build</span><br><span class="line">        ├── CMakeCache.txt</span><br><span class="line">        ├── CMakeFiles</span><br><span class="line">        │   ├── 3.16.3</span><br><span class="line">        │   │   ├── CMakeCCompiler.cmake</span><br><span class="line">        │   │   ├── CMakeCXXCompiler.cmake</span><br><span class="line">        │   │   ├── CMakeDetermineCompilerABI_C.bin</span><br><span class="line">        │   │   ├── CMakeDetermineCompilerABI_CXX.bin</span><br><span class="line">        │   │   ├── CMakeSystem.cmake</span><br><span class="line">        │   │   ├── CompilerIdC</span><br><span class="line">        │   │   │   ├── a.out</span><br><span class="line">        │   │   │   ├── CMakeCCompilerId.c</span><br><span class="line">        │   │   │   └── tmp</span><br><span class="line">        │   │   └── CompilerIdCXX</span><br><span class="line">        │   │       ├── a.out</span><br><span class="line">        │   │       ├── CMakeCXXCompilerId.cpp</span><br><span class="line">        │   │       └── tmp</span><br><span class="line">        │   ├── cmake.check_cache</span><br><span class="line">        │   ├── CMakeDirectoryInformation.cmake</span><br><span class="line">        │   ├── CMakeOutput.log</span><br><span class="line">        │   ├── CMakeTmp</span><br><span class="line">        │   ├── Makefile2</span><br><span class="line">        │   ├── Makefile.cmake</span><br><span class="line">        │   ├── progress.marks</span><br><span class="line">        │   └── TargetDirectories.txt</span><br><span class="line">        ├── cmake_install.cmake</span><br><span class="line">        └── Makefile</span><br></pre></td></tr></table></figure>
+  <h3 class="title">指定编译文件</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在让我们指定我们要编译的源文件，修改 <code>CMakeLists.txt</code> 文件内容如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cmake version</span></span><br><span class="line">cmake_minimum_required(VERSION 3.16.3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># project name</span></span><br><span class="line">project([cmake_learn])</span><br><span class="line"></span><br><span class="line"><span class="comment"># config execcutable</span></span><br><span class="line">add_executable(<span class="variable">$&#123;PROJECT_NAME&#125;</span> main.cpp)</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在上面的 CMake 指令中:
+
+  <ul>
+    <li><code>cmake_minimum_required</code> 指定了执行当前这份 CMake 脚本所需要的最小 CMake 版本;</li>
+    <li><code>project</code> 指定了当前 project 的名称;</li>
+    <li><code>add_executable</code> 指定了生成的可执行文件的名称，以及参与编译和链接的源文件;</li>
+  </ul>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;然后我们运行上述脚本:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]</span><br><span class="line"></span><br><span class="line">$ cmake -S . -B ./out/build</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们则会在 <code>[Path to root]/out/build</code> 得到一份 <code>Makefile</code> 文件，这就是我们最终的构建文件，我们下面进行构建:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: [Path to root]/out/build</span><br><span class="line">Scanning dependencies of target cmake_learn</span><br><span class="line">[ 50%] Building CXX object CMakeFiles/cmake_learn.dir/main.cpp.o</span><br><span class="line">[100%] Linking CXX executable cmake_learn</span><br><span class="line">[100%] Built target cmake_learn</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;构建完成后，我们就可以在 <code>[Path to root]/out/build</code> 下得到可执行文件 <code>cmake_learn</code>，这个可执行文件的命名与我们项目的名称保持一致，这是我们在 <code>CMakeLists.txt</code> 中指定的。我们下面运行可执行文件，可以得到相应的输出。
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$./cmake_learn</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+  <h3 class="title">多文件构建</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们可以在 <code>add_executable</code> 中加入多个源文件，以从多个源文件中启动构建。我们在根目录下创建一个新的文件 <code>printer.cpp</code>，如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ tree . -L 1</span><br><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">├── out</span><br><span class="line">└── printer.cpp</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们在 <code>printer.cpp</code> 中简单定义如下函数:
+
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// printer.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printerBye</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Bye!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;然后在 <code>main.cpp</code> 中进行调用:
+
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printerBye</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    printerBye();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;修改 <code>CMakeLists.txt</code> 如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cmake version</span></span><br><span class="line">cmake_minimum_required(VERSION 3.16.3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># project name</span></span><br><span class="line">project(cmake_learn)</span><br><span class="line"></span><br><span class="line"><span class="comment"># config execcutable</span></span><br><span class="line">add_executable(<span class="variable">$&#123;PROJECT_NAME&#125;</span> main.cpp printer.cpp)</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;同理，按照上面的流程，我们启动构建，并运行最终可执行程序文件:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]</span><br><span class="line"></span><br><span class="line">$ cmake -S . -B ./out/build/</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: [Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> ./out/build/</span><br><span class="line">$ make</span><br><span class="line">Scanning dependencies of target cmake_learn</span><br><span class="line">[ 33%] Building CXX object CMakeFiles/cmake_learn.dir/main.cpp.o</span><br><span class="line">[ 66%] Building CXX object CMakeFiles/cmake_learn.dir/printer.cpp.o</span><br><span class="line">[100%] Linking CXX executable cmake_learn</span><br><span class="line">[100%] Built target cmake_learn</span><br><span class="line"></span><br><span class="line">$ ./cmake_learn </span><br><span class="line">Hello World!</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+  <h3 class="title"><code>target_xxx</code>: 辅助生成目标</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>cmake</code> 的 <def>目标</def> 由 <code>add_library</code> 或者 <code>add_executable</code> 生成，前者仅完成编译，生成 library；后者完成编译+链接，生成可执行文件。
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;下面我们对三个辅助生成目标的 <code>cmake</code> 脚本 API 进行总结:
+
+  <ul>
+    <li><code>target_include_directories</code> <cite>cmake_doc_target_include_directories</cite>: 指定目标包含的头文件路径;</li>
+    <li><code>target_link_libraries</code> <cite>cmake_doc_target_link_libraries</cite>: 指定目标链接的库;</li>
+    <li><code>target_compile_options</code> <cite>cmake_doc_target_compile_options</cite>: 指定目标的编译选项;</li>
+  </ul>
+
+  <h4 class="title"><code>target_link_libraries</code>: 添加链接时所使用的库</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;现在我们尝试把我们上面编写的 <code>printer.cpp</code> 部分的代码编译为静态库。为了在 <code>main.cpp</code> 中正常调用 <code>printerBye</code> 函数，我们需要在最终链接阶段指定我们编译出来的静态库。
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;首先我们将工程文件夹整理如下:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ tree . -L 2</span><br><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">├── out</span><br><span class="line">│   └── build</span><br><span class="line">└── lib_printer</span><br><span class="line">    ├── CMakeLists.txt</span><br><span class="line">    ├── printer.cpp</span><br><span class="line">    └── printer.h</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;我们把 <code>printer.cpp</code> 移动到了它的专属文件夹 <code>[Path to root]/lib_printer</code> 下，并且为它创建了 <code>printer.h</code> 文件，文件内容简单对函数进行了声明，如下所示:
+
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// printer.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _PRINTER_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _PRINTER_H_</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printerBye</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;注意到我们还在该文件夹下创建了 <code>CMakeLists.txt</code> 文件，文件内容如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [Path to root]/lib_printer/CMakeLists.txt</span></span><br><span class="line">add_library(printer printer.cpp)</span><br></pre></td></tr></table></figure>
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在这里我们调用了 <code>add_library</code>，将我们在子文件夹中定义的内容编译为一个静态库，静态库的名称为 <code>printer</code>，静态库编译需要的源文件为 <code>printer.cpp</code>。
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;回到根目录下的 <code>CMakeLists.txt</code> 文件，我们修改文件内容如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [Path to root]/CMakeLists.txt</span></span><br><span class="line"><span class="comment"># cmake version</span></span><br><span class="line">cmake_minimum_required(VERSION 3.16.3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># project name</span></span><br><span class="line">project(cmake_learn)</span><br><span class="line"></span><br><span class="line"><span class="comment"># config execcutable</span></span><br><span class="line">add_executable(<span class="variable">$&#123;PROJECT_NAME&#125;</span> main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># levels</span></span><br><span class="line">add_subdirectory(lib_printer)</span><br><span class="line"></span><br><span class="line"><span class="comment"># link library to target</span></span><br><span class="line">target_link_libraries(<span class="variable">$&#123;PROJECT_NAME&#125;</span> printer)</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;这里，我们首先把 <code>add_executable</code> 中，编译可执行文件所需要的源文件改回了只需要 <code>main.cpp</code> 的设定，然后我们使用了 <code>add_subdirectory</code> 指令，将 <code>lib_printer</code> 子文件夹作为一个 level 加入到当前工程中，这样 <code>cmake</code> 就可以识别到子目录中的 <code>CMakeLists.txt</code> 了。最后我们使用了 <code>target_link_libraries</code>，将我们在子文件夹 <code>printer</code> 中构建的静态库链接到了我们最终要构建的可执行程序 <code>$&#123;PROJECT_NAME&#125;</code> (i.e., 与项目同名) 中。
+
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;下面我们启动构建过程，如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]</span><br><span class="line"></span><br><span class="line">$ cmake -S . -B ./out/build/</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: [Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> [Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line">[ 50%] Built target printer</span><br><span class="line">Scanning dependencies of target cmake_learn</span><br><span class="line">[ 75%] Building CXX object CMakeFiles/cmake_learn.dir/main.cpp.o</span><br><span class="line">[100%] Linking CXX executable cmake_learn</span><br><span class="line">[100%] Built target cmake_learn</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;运行可执行文件，如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ ./cmake_learn </span><br><span class="line">Hello World!</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+  <h4 class="title"><code>target_include_directories</code>: 添加头文件检索目录</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;基于我们上一节的内容，我们接着实现一个功能: 为代码添加头文件检索目录。我们进一步修改 <code>[Path to root]/CMakeLists.txt</code> 如下所示:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [Path to root]/CMakeLists.txt</span></span><br><span class="line"><span class="comment"># cmake version</span></span><br><span class="line">cmake_minimum_required(VERSION 3.16.3)</span><br><span class="line"></span><br><span class="line"><span class="comment"># project name</span></span><br><span class="line">project(cmake_learn)</span><br><span class="line"></span><br><span class="line"><span class="comment"># config execcutable</span></span><br><span class="line">add_executable(<span class="variable">$&#123;PROJECT_NAME&#125;</span> main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add header path</span></span><br><span class="line">target_include_directories(<span class="variable">$&#123;PROJECT_NAME&#125;</span> PUBLIC lib_printer)</span><br><span class="line"></span><br><span class="line"><span class="comment"># levels</span></span><br><span class="line">add_subdirectory(lib_printer)</span><br><span class="line"></span><br><span class="line"><span class="comment"># link library to target</span></span><br><span class="line">target_link_libraries(<span class="variable">$&#123;PROJECT_NAME&#125;</span> printer)</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;在上面的脚本中，我们增加了 <code>target_include_directories</code>，为我们最终要构建的可执行程序 <code>$&#123;PROJECT_NAME&#125;</code> 添加了头文件的检索目录。下面我们对 <code>main.cpp</code> 进行修改，使其像包含标准头文件一样，包含我们自定义的 <code>printer.h</code>:
+
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [Path to root]/main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;printer.h&quot;&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printerBye</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    printerBye();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;下面我们对目标进行构建，然后测试运行:
+
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span></span><br><span class="line">[Path to root]</span><br><span class="line"></span><br><span class="line">$ cmake -S . -B ./out/build/</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: [Path to root]/out/build</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> ./out/build</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line">[ 50%] Built target printer</span><br><span class="line">Scanning dependencies of target cmake_learn</span><br><span class="line">[ 75%] Building CXX object CMakeFiles/cmake_learn.dir/main.cpp.o</span><br><span class="line">[100%] Linking CXX executable cmake_learn</span><br><span class="line">[100%] Built target cmake_learn</span><br><span class="line"></span><br><span class="line">$ ./cmake_learn </span><br><span class="line">Hello World!</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+  <h4 class="title"><code>target_compile_options</code>: 指定目标的编译选项</h4>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;TODO
+
+  <h3 class="title">Submodules</h3>
+  <p>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+
+
+<div class="div_ref" id="ref_container"></div>
+
+</body>
+
+
+<!--图片、引用-->
+<!-- 
+<div class="img" title="img title" label="img_label" source="url">
+  <img src="" height="" />
+</div>
+
+<imaging>img_label</imaging>
+-->
+
+<!--等式、引用-->
+<!-- 
+<div class="equation" label="equation_label">
+</div>
+
+<equation>equation_label</equation>
+-->
+
+<!--定理、引用、证明-->
+<!-- 
+<div class="theorm" label="theorm_label">
+</div>
+
+<theorm>theorm_label</theorm>
+
+<div class="theorm_prove">
+</div>
+-->
+
+<!--引用其它章节-->
+<!-- 
+<ref></ref> 
+-->
+
+<!--引用文献-->
+<!-- 
+<cite></cite> 
+-->
+
+<!--关键词-->
+<!-- 
+<def></def> 
+-->
+
+<!--醒目注意-->
+<!-- 
+<note></note> 
+-->
+
+<!--表格-->
+<!--
+<table border="1" align="center" bgcolor="#FFFFFF">
+  <caption>表格</caption>
+  <tr>
+    <th>A</th>
+    <th>B</th>
+    <th>C</th>
+  </tr>
+  <tr>
+    <td>xxx</td>
+    <td>xxx</td>
+    <td>xxx</td>
+  </tr>
+</table>
+-->
+
+<!--矩阵公式-->
+<!--
+<div class="cmath" align="center">
+  `((1, 0),(1, 0))`
+</div><br>
+-->
+
+<!--伪代码-->
+<!--
+<pre id="quicksort" style="display:hidden;">
+  % This quicksort algorithm is extracted from Chapter 7, Introduction to Algorithms (3rd edition)
+  \begin{algorithm}
+  \caption{Quicksort}
+  \begin{algorithmic}
+  \PROCEDURE{Quicksort}{$A, p, r$}
+      % Add Here
+
+      % 空行
+      % \STATE \texttt{\\}
+  \ENDPROCEDURE
+  \end{algorithmic}
+  \end{algorithm}
+</pre>
+<script>
+    pseudocode.renderElement(document.getElementById("quicksort"));
+</script>
+-->
+<!--
+Latex 伪代码格式见: https://github.com/SaswatPadhi/pseudocode.js
+-->
+
+<!--图片-->
+<!--
+<div align="center">
+  <img src="./pic/xxx.png" width=80%>
+</div>
+-->
+
+<!--正文-->
+<!--
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;公式：<span>`\overline{A}\overline{B}`</span>
+</p>
+-->
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/sec_learning_backup/">SEC_LEARNING_BACKUP</a></li>
+          <li>COMPILER_CMAKE_TUTORIAL</li>
+        
+  </ul>
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhuobin Huang"
+      src="/images/avatar_2.png">
+  <p class="site-author-name" itemprop="name">Zhuobin Huang</p>
+  <div class="site-description" itemprop="description">System Engineer</div>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhuobin Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

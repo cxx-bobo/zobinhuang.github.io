@@ -95,30 +95,58 @@ async function _load_catalogue(){
                                 if(module.posts[k].hasOwnProperty("origin")){
                                     if(module.posts[k].origin){
                                         let origin_tag = document.createElement('origin_tag')
-                                        origin_tag.innerHTML = `原创`
-                                        let fc = table_entry_td.firstChild
-                                        table_entry_td.insertBefore(origin_tag,fc)
+                                        // origin_tag.innerHTML = `原创`
+                                        origin_tag.innerHTML = `Original`
+                                        table_entry_td.append(origin_tag)
                                     } else {
                                         let forward_tag = document.createElement('forward_tag')
-                                        forward_tag.innerHTML = `转载`
-                                        let fc = table_entry_td.firstChild
-                                        table_entry_td.insertBefore(forward_tag,fc)
+                                        // forward_tag.innerHTML = `转载`
+                                        forward_tag.innerHTML = `Reproduced`
+                                        table_entry_td.append(forward_tag)
                                     }
                                 } else {
                                     // 兼容老版本 (文章没有 origin 属性)
                                     if(module.posts[k].external_link === ""){
                                         let origin_tag = document.createElement('origin_tag')
-                                        origin_tag.innerHTML = `原创`
-                                        let fc = table_entry_td.firstChild
-                                        table_entry_td.insertBefore(origin_tag,fc)
+                                        // origin_tag.innerHTML = `原创`
+                                        origin_tag.innerHTML = `Original`
+                                        table_entry_td.append(origin_tag)
                                     } else {
                                         let forward_tag = document.createElement('forward_tag')
-                                        forward_tag.innerHTML = `转载`
-                                        let fc = table_entry_td.firstChild
-                                        table_entry_td.insertBefore(forward_tag,fc)
+                                        // forward_tag.innerHTML = `转载`
+                                        forward_tag.innerHTML = `Reproduced`
+                                        table_entry_td.append(forward_tag)
                                     }
                                 }
-                                
+
+                                // 在 td 最前面加上 [中文/英文] 的标签
+                                if(module.posts[k].hasOwnProperty("language")){
+                                    if(module.posts[k].language === "cn"){
+                                        let cn_tag = document.createElement('cn_tag')
+                                        // cn_tag.innerHTML = `中文`
+                                        cn_tag.innerHTML = `🌐 Chinese`
+                                        table_entry_td.append(cn_tag)
+                                    } else if (module.posts[k].language === "en") {
+                                        let en_tag = document.createElement('en_tag')
+                                        en_tag.innerHTML = `🌐 English`
+                                        table_entry_td.append(en_tag)
+                                    }
+                                } else {
+                                    // 兼容老版本 (文章没有 language 属性)
+                                    let cn_tag = document.createElement('cn_tag')
+                                    // cn_tag.innerHTML = `中文`
+                                    cn_tag.innerHTML = `🌐 Chinese`
+                                    table_entry_td.append(cn_tag)
+                                }
+
+                                // 在 td 最前面加上 [日期] 的标签
+                                if(module.posts[k].hasOwnProperty("date")){
+                                    let date_tag = document.createElement('date_tag')
+                                    // cn_tag.innerHTML = `中文`
+                                    date_tag.innerHTML = `${module.posts[k].date}`
+                                    table_entry_td.append(date_tag)
+                                }
+
                                 // 将 td 塞入 tr
                                 module_table.append(table_entry_tr)
 
@@ -225,28 +253,56 @@ async function _load_catalogue(){
                         if(module.posts[k].hasOwnProperty("origin")){
                             if(module.posts[k].origin){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
                         } else {
                             // 兼容老版本 (文章没有 origin 属性)
                             if(module.posts[k].external_link === ""){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
+                        }
+
+                        // 在 td 最前面加上 [中文/英文] 的标签
+                        if(module.posts[k].hasOwnProperty("language")){
+                            if(module.posts[k].language === "cn"){
+                                let cn_tag = document.createElement('cn_tag')
+                                // cn_tag.innerHTML = `中文`
+                                cn_tag.innerHTML = `🌐 Chinese`
+                                table_entry_td.append(cn_tag)
+                            } else if (module.posts[k].language === "en") {
+                                let en_tag = document.createElement('en_tag')
+                                en_tag.innerHTML = `🌐 English`
+                                table_entry_td.append(en_tag)
+                            }
+                        } else {
+                            // 兼容老版本 (文章没有 language 属性)
+                            let cn_tag = document.createElement('cn_tag')
+                            // cn_tag.innerHTML = `中文`
+                            cn_tag.innerHTML = `🌐 Chinese`
+                            table_entry_td.append(cn_tag)
+                        }
+
+                        // 在 td 最前面加上 [日期] 的标签
+                        if(module.posts[k].hasOwnProperty("date")){
+                            let date_tag = document.createElement('date_tag')
+                            // cn_tag.innerHTML = `中文`
+                            date_tag.innerHTML = `${module.posts[k].date}`
+                            table_entry_td.append(date_tag)
                         }
                         
                         // 将 td 塞入 tr
@@ -326,28 +382,56 @@ async function _load_catalogue(){
                         if(module.posts[k].hasOwnProperty("origin")){
                             if(module.posts[k].origin){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
                         } else {
                             // 兼容老版本 (文章没有 origin 属性)
                             if(module.posts[k].external_link === ""){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
+                        }
+
+                        // 在 td 最前面加上 [中文/英文] 的标签
+                        if(module.posts[k].hasOwnProperty("language")){
+                            if(module.posts[k].language === "cn"){
+                                let cn_tag = document.createElement('cn_tag')
+                                // cn_tag.innerHTML = `中文`
+                                cn_tag.innerHTML = `🌐 Chinese`
+                                table_entry_td.append(cn_tag)
+                            } else if (module.posts[k].language === "en") {
+                                let en_tag = document.createElement('en_tag')
+                                en_tag.innerHTML = `🌐 English`
+                                table_entry_td.append(en_tag)
+                            }
+                        } else {
+                            // 兼容老版本 (文章没有 language 属性)
+                            let cn_tag = document.createElement('cn_tag')
+                            // cn_tag.innerHTML = `中文`
+                            cn_tag.innerHTML = `🌐 Chinese`
+                            table_entry_td.append(cn_tag)
+                        }
+
+                        // 在 td 最前面加上 [日期] 的标签
+                        if(module.posts[k].hasOwnProperty("date")){
+                            let date_tag = document.createElement('date_tag')
+                            // cn_tag.innerHTML = `中文`
+                            date_tag.innerHTML = `${module.posts[k].date}`
+                            table_entry_td.append(date_tag)
                         }
 
                         module_table.append(table_entry_tr)
@@ -423,28 +507,56 @@ async function _load_catalogue(){
                         if(module.posts[k].hasOwnProperty("origin")){
                             if(module.posts[k].origin){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
                         } else {
                             // 兼容老版本 (文章没有 origin 属性)
                             if(module.posts[k].external_link === ""){
                                 let origin_tag = document.createElement('origin_tag')
-                                origin_tag.innerHTML = `原创`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(origin_tag,fc)
+                                // origin_tag.innerHTML = `原创`
+                                origin_tag.innerHTML = `Original`
+                                table_entry_td.append(origin_tag)
                             } else {
                                 let forward_tag = document.createElement('forward_tag')
-                                forward_tag.innerHTML = `转载`
-                                let fc = table_entry_td.firstChild
-                                table_entry_td.insertBefore(forward_tag,fc)
+                                // forward_tag.innerHTML = `转载`
+                                forward_tag.innerHTML = `Reproduced`
+                                table_entry_td.append(forward_tag)
                             }
+                        }
+
+                        // 在 td 最前面加上 [中文/英文] 的标签
+                        if(module.posts[k].hasOwnProperty("language")){
+                            if(module.posts[k].language === "cn"){
+                                let cn_tag = document.createElement('cn_tag')
+                                // cn_tag.innerHTML = `中文`
+                                cn_tag.innerHTML = `🌐 Chinese`
+                                table_entry_td.append(cn_tag)
+                            } else if (module.posts[k].language === "en") {
+                                let en_tag = document.createElement('en_tag')
+                                en_tag.innerHTML = `🌐 English`
+                                table_entry_td.append(en_tag)
+                            }
+                        } else {
+                            // 兼容老版本 (文章没有 language 属性)
+                            let cn_tag = document.createElement('cn_tag')
+                            // cn_tag.innerHTML = `中文`
+                            cn_tag.innerHTML = `🌐 Chinese`
+                            table_entry_td.append(cn_tag)
+                        }
+
+                        // 在 td 最前面加上 [日期] 的标签
+                        if(module.posts[k].hasOwnProperty("date")){
+                            let date_tag = document.createElement('date_tag')
+                            // cn_tag.innerHTML = `中文`
+                            date_tag.innerHTML = `${module.posts[k].date}`
+                            table_entry_td.append(date_tag)
                         }
 
                         module_table.append(table_entry_tr)
